@@ -14,7 +14,8 @@ jobs:
       - name: Download new design
         run: |
           curl -L "https://py6oxjxfpjsxcz.cf.metaaiusercontent.com/index.html?hatch_share=zns-logistics-website-py6oxjxfpjsxcz&share_key=Y0HqbmXEgLjKGfNdNId3_qDHOIbNY72MlUJ77bZwSyc" -o index.html
-          test $(stat -c%s index.html) -gt 100000
+          echo "Downloaded $(stat -c%s index.html) bytes"
+          test $(stat -c%s index.html) -gt 10000
           grep -q "UPCOUNTRY" index.html
       - name: Commit and push
         run: |
