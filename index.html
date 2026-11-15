@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZNS Logistics — Reefer & Container Transport Across Pakistan</title>
 <meta name="description" content="ZNS Logistics — reliable reefer & container transport from Karachi Port and Port Qasim to factories across Pakistan. 30 own trailers.">
+<meta name="keywords" content="ZNS Logistics, container transport Karachi, port to factory, reefer transport Pakistan, Karachi Port, Port Qasim, upcountry transport, Lahore freight">
+<meta property="og:title" content="ZNS Logistics — Reefer & Container Transport Across Pakistan">
+<meta property="og:description" content="Import containers from Karachi Port & Port Qasim to factories in Lahore, Punjab & KPK — on our own fleet of 30 trailers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahsanaasheno03-prog.github.io/zns-logistics-website/">
+<meta property="og:image" content="https://ahsanaasheno03-prog.github.io/zns-logistics-website/assets/trailer-ngr-1795.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -165,6 +171,17 @@ section{padding:96px 0}
 @media(max-width:760px){.about-lines{grid-template-columns:1fr}}
 .about-lines div{display:flex;gap:12px;align-items:flex-start;color:var(--teal2);font-size:15.5px;line-height:1.6}
 .about-lines .tick{color:#d99a00;font-weight:800}
+
+/* ---------- CLIENTS ---------- */
+.clients{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.clients{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.clients{grid-template-columns:1fr}}
+.client-card{background:#fff;border:1px solid #eadfc8;border-radius:16px;padding:26px 22px;text-align:center;
+  font-family:'Oswald',sans-serif;font-size:21px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);
+  transition:transform .3s,box-shadow .3s;position:relative}
+.client-card:hover{transform:translateY(-5px);box-shadow:0 18px 34px rgba(12,43,46,.12)}
+.client-card .new-badge{position:absolute;top:12px;right:12px;background:var(--yellow);color:var(--teal);
+  font-family:'Inter',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:1.5px;padding:4px 10px;border-radius:999px}
 .contact-box{background:linear-gradient(120deg,#fdf3dd,#ffe3ae);border-radius:26px;padding:48px 40px;text-align:center}
 .contact-box h3{font-family:'Oswald',sans-serif;font-size:clamp(30px,4.4vw,48px);text-transform:uppercase;color:var(--teal);line-height:1.1}
 .contact-box p{color:var(--grey);margin:14px auto 26px;max-width:520px}
@@ -192,6 +209,7 @@ footer{background:var(--asphalt);color:#cfd6d2;padding:34px 0;font-size:13.5px}
       <a href="#routes">Routes</a>
       <a href="#fleet">Fleet</a>
       <a href="#about">Company</a>
+      <a href="#clients">Clients</a>
       <a href="#contact">Contact</a>
     </div>
     <a class="nav-cta" href="https://wa.me/923000411895" target="_blank" rel="noopener">Get a Quote</a>
@@ -320,6 +338,24 @@ footer{background:var(--asphalt);color:#cfd6d2;padding:34px 0;font-size:13.5px}
       <div class="reveal d1"><span class="tick">&#10003;</span>Safety as top priority in assuring safe work procedures.</div>
       <div class="reveal"><span class="tick">&#10003;</span>Investing in technology to provide fast, accurate and cost-effective service.</div>
       <div class="reveal d1"><span class="tick">&#10003;</span>Living up to highest industry standards.</div>
+    </div>
+  </div>
+</section>
+
+<section id="clients" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Trusted by</div>
+      <h2 class="sec-title">Our valued clients</h2>
+      <p class="sec-sub">Factories and businesses that trust ZNS Logistics with their containers, week after week.</p>
+    </div>
+    <div class="clients">
+      <div class="client-card reveal">Sigma</div>
+      <div class="client-card reveal d1">Fahad Hammad</div>
+      <div class="client-card reveal d2">Tufail</div>
+      <div class="client-card reveal">Ismail</div>
+      <div class="client-card reveal d1">FF Steel<span class="new-badge">NEW CLIENT</span></div>
+      <div class="client-card reveal d2" style="background:var(--teal);color:var(--yellow)">Your factory here &rarr;</div>
     </div>
   </div>
 </section>
