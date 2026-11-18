@@ -257,6 +257,39 @@ footer strong{color:#fff;font-weight:800;letter-spacing:.03em}
   .marquee-track,.hero-media img,.hero-media::after,.crane-lift,.road-dashes,.truck-card,.scroll-cue{animation:none}
 }
 </style>
+<style id="zns-motions-v2">
+/* ===== ZNS NEW MOTIONS v2 (added 18 Nov 2026) ===== */
+#znsProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--yellow),#2ea86b,var(--blue));z-index:10001;border-radius:0 3px 3px 0;box-shadow:0 1px 8px rgba(255,196,0,.45)}
+.btn,.cta-pill,.ask-btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after,.cta-pill::after,.ask-btn::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-30%;width:45%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-220%) skewX(-18deg);transition:transform .7s ease;pointer-events:none;z-index:1}
+.btn:hover::after,.cta-pill:hover::after,.ask-btn:hover::after{transform:translateX(340%) skewX(-18deg)}
+article.svc{transform-style:preserve-3d;will-change:transform}
+article.svc .no{display:inline-block;transition:transform .45s cubic-bezier(.19,.75,.22,1),color .3s ease}
+article.svc:hover .no{transform:translateX(6px) scale(1.12);color:var(--yellow)}
+#clients.reveal.in .client-chip{animation:chipIn .7s cubic-bezier(.19,.75,.22,1) both}
+#clients.reveal.in .client-chip:nth-child(2){animation-delay:.08s}
+#clients.reveal.in .client-chip:nth-child(3){animation-delay:.16s}
+#clients.reveal.in .client-chip:nth-child(4){animation-delay:.24s}
+#clients.reveal.in .client-chip:nth-child(5){animation-delay:.32s}
+#clients.reveal.in .client-chip:nth-child(6){animation-delay:.4s}
+#clients.reveal.in .client-chip:nth-child(7){animation-delay:.48s}
+#clients.reveal.in .client-chip:nth-child(8){animation-delay:.56s}
+@keyframes chipIn{from{opacity:0;transform:translateY(16px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.client-chip{transition:transform .3s ease,box-shadow .3s ease}
+.client-chip:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 22px rgba(12,43,46,.16)}
+.marquee:hover .marquee-track{animation-play-state:paused}
+#lineDot{position:absolute;left:50%;top:0;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:var(--yellow);border:3px solid var(--paper);box-shadow:0 0 0 5px rgba(255,196,0,.25),0 0 18px 6px rgba(255,196,0,.55);z-index:5;pointer-events:none;opacity:0;transition:opacity .4s ease}
+#lineDot.on{opacity:1}
+.journey .stop{will-change:transform,opacity}
+#znsTop{position:fixed;right:18px;bottom:18px;width:48px;height:48px;border-radius:50%;border:2px solid var(--yellow);background:var(--navy);color:var(--yellow);font-size:20px;line-height:1;cursor:pointer;z-index:10000;opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .35s ease,transform .35s ease,background .3s ease;box-shadow:0 10px 24px rgba(4,38,63,.35)}
+#znsTop.show{opacity:1;transform:none;pointer-events:auto}
+#znsTop:hover{background:var(--ocean)}
+@media (prefers-reduced-motion: reduce){
+  .btn::after,.cta-pill::after,.ask-btn::after{display:none}
+  #clients.reveal.in .client-chip{animation:none}
+  #lineDot{display:none}
+}
+</style>
 </head>
 <body>
 <main id="top">
@@ -640,6 +673,84 @@ footer strong{color:#fff;font-weight:800;letter-spacing:.03em}
       }, {passive: true});
     }
   }
+})();
+</script>
+<script id="zns-motions-v2-js">
+/* ===== ZNS NEW MOTIONS v2 (added 18 Nov 2026) ===== */
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(pointer: fine)").matches;
+  /* --- scroll progress bar + back-to-top --- */
+  var bar = document.createElement("div"); bar.id = "znsProgress"; document.body.appendChild(bar);
+  var topBtn = document.createElement("button"); topBtn.id = "znsTop"; topBtn.type = "button";
+  topBtn.setAttribute("aria-label","Back to top"); topBtn.innerHTML = "&#8593;"; document.body.appendChild(topBtn);
+  topBtn.addEventListener("click", function(){ window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); });
+  /* --- route line travelling dot --- */
+  var wrap = document.getElementById("lineWrap"), dot = null;
+  if (wrap && !reduce) { dot = document.createElement("div"); dot.id = "lineDot"; wrap.appendChild(dot); }
+  var ticking = false;
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + "%";
+    if (h.scrollTop > 600) { topBtn.classList.add("show"); } else { topBtn.classList.remove("show"); }
+    if (wrap && dot) {
+      var r = wrap.getBoundingClientRect();
+      var p = (window.innerHeight * 0.72 - r.top) / r.height;
+      p = Math.max(0, Math.min(1, p));
+      dot.style.top = (p * 100) + "%";
+      if (p > 0.01 && p < 0.995) { dot.classList.add("on"); } else { dot.classList.remove("on"); }
+    }
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){ if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  onScroll();
+  if (reduce) return;
+  /* --- journey stops + about items: pop-in stagger --- */
+  function popIn(selector, baseDelay){
+    var els = document.querySelectorAll(selector);
+    if (!els.length) return;
+    els.forEach(function(el, i){
+      el.style.opacity = "0";
+      el.style.transform = "translateY(18px) scale(.97)";
+      el.style.transition = "opacity .65s ease " + (baseDelay + i * 90) + "ms, transform .65s cubic-bezier(.19,.75,.22,1) " + (baseDelay + i * 90) + "ms";
+    });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.style.opacity = "1";
+          en.target.style.transform = "none";
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold: 0.25});
+    els.forEach(function(el){ io.observe(el); });
+  }
+  popIn(".journey .stop", 0);
+  popIn(".about-item", 0);
+  if (!finePointer) return;
+  /* --- 3D tilt on service cards --- */
+  document.querySelectorAll("article.svc").forEach(function(card){
+    card.addEventListener("pointermove", function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = "perspective(900px) rotateY(" + (x * 7) + "deg) rotateX(" + (-y * 7) + "deg) translateY(-3px)";
+    });
+    card.addEventListener("pointerleave", function(){ card.style.transform = ""; });
+  });
+  /* --- magnetic CTA buttons --- */
+  document.querySelectorAll(".cta-pill, .btn-yellow, .btn-wa").forEach(function(btn){
+    btn.addEventListener("pointermove", function(e){
+      var r = btn.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      btn.style.transform = "translate(" + (x * 7) + "px," + (y * 5) + "px)";
+    });
+    btn.addEventListener("pointerleave", function(){ btn.style.transform = ""; });
+  });
 })();
 </script>
 </body>
